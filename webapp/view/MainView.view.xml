@@ -1,0 +1,32 @@
+<mvc:View controllerName="baitcongroup.invoices.controller.MainView" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m" xmlns:core="sap.ui.core">
+    <Page id="page" title="{i18n>title}">
+        <content>
+            <Panel headerText="{i18n>selectionscreen}">
+                <Label id="labelShipName" labelFor="shipName" text="{i18n>shipname}" class="sapUiMarginSmall" />
+                <Input id="shipName" width="200px" value="{SelectionScreen>/ShipName}" class="sapUiMarginSmallEnd" />
+                <Label id="labelCountry" text="{i18n>country}" class="sapUiMarginSmall" />
+                <Select id="slCountry" selectedKey="{SelectionScreen>/CountryKey}" forceSelection="false" items="{SelectionScreen>/Countries}" width="200px">
+                    <items>
+                        <core:Item key="{SelectionScreen>key}" text="{SelectionScreen>text}" />
+                    </items>
+                </Select>
+                <Button id="btnFilter" text="{i18n>buttonFilter}" class="sapUiMarginSmallEnd" press="onFilter" icon="sap-icon://filter" />
+                <Button id="clearFilter" text="{i18n>clearFilter}" class="sapUiMarginSmallEnd" press="onClearFilter" icon="sap-icon://clear-filter" />
+            </Panel>
+            <Panel>
+                <List id="invoicesList" headerText="{i18n>invoicesHeaderList}" class="sapUiResponsiveMargin" width="auto" items="{/Invoices}">
+                    <items>
+                        <ObjectListItem
+                            title="{ShipName} - {Country}"
+                            number="{   parts: [{ path: 'ExtendedPrice'},
+                                                            { path: 'SelectionScreen>/Currency'}]
+                                                            } "
+                            numberUnit="{SelectionScreen>/Currency}"
+                            numberState="{= ${ExtendedPrice} > 100 ? 'Success' : 'Error'}"
+                        />
+                    </items>
+                </List>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>
